@@ -3,12 +3,16 @@ from pydantic import BaseModel
 import openai
 import os
 
+# Получаем ключ API из переменных окружения
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 app = FastAPI()
 
+# Модель запроса
 class TopicRequest(BaseModel):
     topic: str
+
+# Эндпоинт для генерации поста
 @app.post("/generate-post")
 async def generate_post(data: TopicRequest):
     prompt = f"Напиши пост для Telegram-блога на тему: {data.topic}. Структура: заголовок, краткий подзаголовок, основной текст. Используй неформальный тон и реальные примеры."
@@ -27,7 +31,9 @@ async def generate_post(data: TopicRequest):
     except Exception as e:
         return {"error": str(e)}
 
+# Запуск Uvicorn для Railway
 if __name__ == "__main__":
     import uvicorn
     port = int(os.environ.get("PORT", 8000))
     uvicorn.run("main:app", host="0.0.0.0", port=port)
+
