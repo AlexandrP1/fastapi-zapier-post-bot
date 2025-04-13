@@ -8,6 +8,10 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 app = FastAPI()
 
+@app.get("/")
+async def root():
+    return {"message": "Hello from FastAPI!"}
+
 # Модель запроса
 class TopicRequest(BaseModel):
     topic: str
