@@ -9,7 +9,6 @@ app = FastAPI()
 
 class TopicRequest(BaseModel):
     topic: str
-
 @app.post("/generate-post")
 async def generate_post(data: TopicRequest):
     prompt = f"Напиши пост для Telegram-блога на тему: {data.topic}. Структура: заголовок, краткий подзаголовок, основной текст. Используй неформальный тон и реальные примеры."
